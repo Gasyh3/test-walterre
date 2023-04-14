@@ -20,7 +20,11 @@ import {
       currentEnergy: string;
       currentEnergyEcs?: string;
       totalConsumption?: number;
+    totalConsumption1?: number;
+        totalConsumption2?: number; 
       costConsumption?: number;
+      costConsumption1?: number; 
+      costConsumption2?: number;
       costEcs?: number;
       volumeEcs?: number;
       maintenanceCost?: number;
@@ -33,6 +37,8 @@ export const EnergyAndExpensesForm = () => {
     const { register, handleSubmit, getValues, watch } = useForm<ChaufferieData>();
     const [yearsData, setYearsData] = useState([{ id: 0 }]);
     const natureOfEcsProduction = watch('natureOfEcsProduction');
+    const [numEnergies, setNumEnergies] = useState(1);
+
   
     const onSubmit: SubmitHandler<ChaufferieData> = (data) => {
       console.log(data);
@@ -224,6 +230,70 @@ export const EnergyAndExpensesForm = () => {
           variant="outlined"
           margin="normal"
         />
+        {numEnergies === 1 && (
+  <>
+    <TextField
+      {...register(`yearsData.${year.id}.totalConsumption`)}
+      id={`totalConsumption-${year.id}`}
+      label="Consommation totale"
+      type="number"
+      fullWidth
+      variant="outlined"
+      margin="normal"
+    />
+    <TextField
+      {...register(`yearsData.${year.id}.costConsumption`)}
+      id={`costConsumption-${year.id}`}
+      label="Coût énergétique total"
+      type="number"
+      fullWidth
+      variant="outlined"
+      margin="normal"
+    />
+  </>
+)}
+
+{numEnergies === 2 && (
+  <>
+    <TextField
+      {...register(`yearsData.${year.id}.totalConsumption1`)}
+      id={`totalConsumption1-${year.id}`}
+      label="Consommation énergie 1"
+      type="number"
+      fullWidth
+      variant="outlined"
+      margin="normal"
+    />
+    <TextField
+      {...register(`yearsData.${year.id}.totalConsumption2`)}
+      id={`totalConsumption2-${year.id}`}
+      label="Consommation énergie 2"
+      type="number"
+      fullWidth
+      variant="outlined"
+      margin="normal"
+    />
+    <TextField
+      {...register(`yearsData.${year.id}.costConsumption1`)}
+      id={`costConsumption1-${year.id}`}
+      label="Coût énergie 1"
+      type="number"
+      fullWidth
+      variant="outlined"
+      margin="normal"
+    />
+    <TextField
+      {...register(`yearsData.${year.id}.costConsumption2`)}
+      id={`costConsumption2-${year.id}`}
+      label="Coût énergie 2"
+      type="number"
+      fullWidth
+      variant="outlined"
+      margin="normal"
+    />
+  </>
+)}
+
 
         {year.id !== 0 && (
           <Button variant="contained" color="secondary" onClick={() => removeYear(year.id)}>
@@ -240,6 +310,17 @@ export const EnergyAndExpensesForm = () => {
           </Button>
         )}
       </Box>
+      <Box my={2}>
+  {numEnergies < 2 && (
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={() => setNumEnergies(numEnergies + 1)}
+    >
+      Ajouter une énergie
+    </Button>
+  )}
+</Box>
 
       <Box my={2}>
         <Button variant="contained" color="primary" type="submit">
