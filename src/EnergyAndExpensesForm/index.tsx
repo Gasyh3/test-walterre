@@ -100,6 +100,7 @@ export const EnergyAndExpensesForm = () => {
             {...register(`yearsData.${year.id}.startConsumptionPeriod`)}
             id={`startConsumptionPeriod-${year.id}`}
             label="Début de la période"
+            value={year.startConsumptionPeriod}
             type="date"
             sx={{ width: '49%' }}
             InputLabelProps={{
@@ -110,6 +111,7 @@ export const EnergyAndExpensesForm = () => {
             {...register(`yearsData.${year.id}.endConsumptionPeriod`)}
             id={`endConsumptionPeriod-${year.id}`}
             label="Fin de la période"
+            value={year.endConsumptionPeriod}
             type="date"
             sx={{ width: '49%' }}
             InputLabelProps={{                shrink: true,
