@@ -30,7 +30,7 @@ import {
   }
 
 export const EnergyAndExpensesForm = () => {
-    const { register, handleSubmit, control, getValues, watch } = useForm<ChaufferieData>();
+    const { register, handleSubmit, getValues, watch } = useForm<ChaufferieData>();
     const [yearsData, setYearsData] = useState([{ id: 0 }]);
     const natureOfEcsProduction = watch('natureOfEcsProduction');
   
@@ -39,16 +39,35 @@ export const EnergyAndExpensesForm = () => {
     };
 
 
-
-    
     //Pour le bonus 1 :
     const addYear = () => {
-        
+        /* 
+        * Fonction addYear sans le bonus 1
       if (yearsData.length < 5) {
         setYearsData([...yearsData, { id: yearsData.length }]);
       }
     };
+   */
+  //Bonus 1
+  const lastYearValues = getValues(`yearsData.${yearsData.length - 1}`);
+  const lastYearEndDate = lastYearValues.endConsumptionPeriod;
 
+  const newStartPeriod = new Date(lastYearEndDate);
+  newStartPeriod.setDate(newStartPeriod.getDate() + 1);
+  const newEndPeriod = new Date(newStartPeriod);
+  newEndPeriod.setFullYear(newEndPeriod.getFullYear() + 1);
+  newEndPeriod.setDate(newEndPeriod.getDate() - 1);
+
+  setYearsData((prevState) => [
+    ...prevState,
+    {
+      id: yearsData.length,
+      startConsumptionPeriod: newStartPeriod.toISOString().split('T')[0],
+      endConsumptionPeriod: newEndPeriod.toISOString().split('T')[0],
+      currentEnergy: lastYearValues.currentEnergy,
+    },
+  ]);
+};
   
 
     const removeYear = (id: number) => {
